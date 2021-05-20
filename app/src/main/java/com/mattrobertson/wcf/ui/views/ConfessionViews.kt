@@ -1,5 +1,6 @@
 package com.mattrobertson.wcf.ui.views
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,9 +14,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mattrobertson.wcf.R
 import com.mattrobertson.wcf.model.Chapter
 import com.mattrobertson.wcf.model.Confession
 import com.mattrobertson.wcf.model.Section
@@ -118,10 +123,12 @@ fun ShowTocButton(
         ),
         modifier = modifier
     ) {
-        Text(
-            text = "ᐱ",
-            color = if (isSystemInDarkTheme()) Color.White else VeryDarkGray,
-            fontSize = 28.sp
+        Image(
+            painter = painterResource(id = R.drawable.ic_menu),
+            colorFilter = ColorFilter.tint(
+                color = if (isSystemInDarkTheme()) OffWhite else VeryDarkGray
+            ),
+            contentDescription = "Menu"
         )
     }
 }
