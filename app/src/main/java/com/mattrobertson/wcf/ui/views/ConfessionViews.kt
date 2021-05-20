@@ -1,24 +1,26 @@
 package com.mattrobertson.wcf.ui.views
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mattrobertson.wcf.model.Chapter
 import com.mattrobertson.wcf.model.Confession
 import com.mattrobertson.wcf.model.Section
+import com.mattrobertson.wcf.ui.theme.OffWhite
+import com.mattrobertson.wcf.ui.theme.VeryDarkGray
 import com.mattrobertson.wcf.util.formatSectionText
 import kotlinx.coroutines.launch
 
@@ -91,18 +93,36 @@ fun Confession(
                 }
             }
 
-            Text(
-                text = "ᐱ",
-                color = MaterialTheme.colors.primary,
-                fontSize = 24.sp,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .clickable {
-                        showBottomSheet()
-                    }
-                    .padding(24.dp),
+            ShowTocButton(
+                modifier = Modifier.align(Alignment.BottomEnd),
+                onClick = {
+                    showBottomSheet()
+                }
             )
         }
+    }
+}
+
+@Composable
+fun ShowTocButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            if (isSystemInDarkTheme()) VeryDarkGray else OffWhite
+        ),
+        shape = RoundedCornerShape(
+            topStart = 8.dp
+        ),
+        modifier = modifier
+    ) {
+        Text(
+            text = "ᐱ",
+            color = if (isSystemInDarkTheme()) Color.White else VeryDarkGray,
+            fontSize = 28.sp
+        )
     }
 }
 
