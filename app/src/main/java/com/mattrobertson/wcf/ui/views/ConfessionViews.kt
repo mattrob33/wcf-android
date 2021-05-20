@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -116,8 +115,7 @@ fun Chapter(
         chapter.sections.forEachIndexed { index, section ->
             Section(
                 section = section,
-                sectionNum = index + 1,
-                modifier = Modifier.padding(8.dp)
+                sectionNum = index + 1
             )
         }
     }
@@ -129,7 +127,7 @@ fun ChapterNumber(num: Int) {
         text = "Chapter $num",
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.Center,
-        fontSize = 22.sp
+        style = MaterialTheme.typography.h1
     )
 }
 
@@ -137,18 +135,23 @@ fun ChapterNumber(num: Int) {
 fun ChapterTitle(title: String) {
     Text(
         text = title,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
         textAlign = TextAlign.Center,
-        fontStyle = FontStyle.Italic,
-        fontSize = 20.sp
+        style = MaterialTheme.typography.h2
     )
 }
 
 @Composable
 fun Section(
     section: Section,
-    sectionNum: Int,
-    modifier: Modifier = Modifier
+    sectionNum: Int
 ) {
-    Text(text = formatSectionText(section, sectionNum), modifier)
+    Text(
+        text = formatSectionText(section, sectionNum),
+        style = MaterialTheme.typography.body1,
+        modifier = Modifier.padding(
+            horizontal = 16.dp,
+            vertical = 16.dp
+        )
+    )
 }
