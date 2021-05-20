@@ -74,7 +74,7 @@ fun Confession(
 ) {
     Box {
         LazyColumn(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp),
             state = listState
         ) {
 
@@ -123,9 +123,14 @@ fun Chapter(
 
 @Composable
 fun ChapterNumber(num: Int) {
+    val topPadding = when (num) {
+        1 -> 28.dp
+        else -> 0.dp
+    }
+
     Text(
         text = "Chapter $num",
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(top = topPadding),
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.h1
     )
