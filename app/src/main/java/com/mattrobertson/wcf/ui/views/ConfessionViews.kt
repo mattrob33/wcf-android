@@ -1,53 +1,85 @@
 package com.mattrobertson.wcf.ui.views
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mattrobertson.wcf.model.Chapter
+import com.mattrobertson.wcf.model.Confession
 import com.mattrobertson.wcf.model.Section
 import com.mattrobertson.wcf.util.formatSectionText
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @Composable
-fun ConfessionScreen(chapters: List<Chapter>) {
+fun ConfessionScreen(
+    confession: Confession
+) {
+    val coroutineScope = rememberCoroutineScope()
 
     val listState = rememberLazyListState()
 
-    val coroutineScope = rememberCoroutineScope()
-    
-    Column {
-        Box(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Button(
-                onClick = {
-                    coroutineScope.launch {
-                        listState.scrollToItem(0)
-                    }
-                }
-            ) {
-                Text(text = "Top")
-            }
-        }
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+    )
 
+    BottomSheetScaffold(
+        scaffoldState = bottomSheetScaffoldState,
+        sheetContent = {
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(400.dp)
+            ) {
+                TableOfContents(
+                    confession = confession,
+                    onClick = { position ->
+                        coroutineScope.launch {
+                            bottomSheetScaffoldState.bottomSheetState.collapse()
+                            listState.scrollToItem(position)
+                        }
+                    }
+                )
+            }
+        },
+        sheetPeekHeight = 0.dp
+    ) {
+        Confession(
+            confession = confession,
+            listState = listState,
+            showBottomSheet = {
+                coroutineScope.launch {
+                    bottomSheetScaffoldState.bottomSheetState.expand()
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun Confession(
+    confession: Confession,
+    listState: LazyListState,
+    showBottomSheet: () -> Unit
+) {
+    Box {
         LazyColumn(
             modifier = Modifier.padding(16.dp),
             state = listState
         ) {
 
-            chapters.forEachIndexed { index, chapter ->
+            confession.chapters.forEachIndexed { index, chapter ->
                 item {
                     Chapter(chapter, index + 1)
                     Spacer(modifier = Modifier.height(32.dp))
@@ -56,6 +88,18 @@ fun ConfessionScreen(chapters: List<Chapter>) {
                 }
             }
         }
+
+        Text(
+            text = "ᐱ",
+            color = MaterialTheme.colors.primary,
+            fontSize = 24.sp,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .clickable {
+                    showBottomSheet()
+                }
+                .padding(24.dp),
+        )
     }
 }
 

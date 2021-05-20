@@ -21,6 +21,11 @@ private fun numToRomanNumeral(num: Int): String {
         8 -> "viii."
         9 -> "ix."
         10 -> "x."
+        11 -> "xi."
+        12 -> "xii."
+        13 -> "xiii."
+        14 -> "xiv."
+        15 -> "xv."
         else -> ""
     }
 }

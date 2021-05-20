@@ -18,4 +18,6 @@ class ConfessionRepo {
 
     fun getAllChapters() = confession.chapters
 
+    fun getConfession() = confession
+
 }
