@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -72,33 +74,35 @@ fun Confession(
     listState: LazyListState,
     showBottomSheet: () -> Unit
 ) {
-    Box {
-        LazyColumn(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            state = listState
-        ) {
+    SelectionContainer {
+        Box {
+            LazyColumn(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                state = listState
+            ) {
 
-            confession.chapters.forEachIndexed { index, chapter ->
-                item {
-                    Chapter(chapter, index + 1)
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Divider()
-                    Spacer(modifier = Modifier.height(32.dp))
+                confession.chapters.forEachIndexed { index, chapter ->
+                    item {
+                        Chapter(chapter, index + 1)
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Divider()
+                        Spacer(modifier = Modifier.height(32.dp))
+                    }
                 }
             }
-        }
 
-        Text(
-            text = "ᐱ",
-            color = MaterialTheme.colors.primary,
-            fontSize = 24.sp,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .clickable {
-                    showBottomSheet()
-                }
-                .padding(24.dp),
-        )
+            Text(
+                text = "ᐱ",
+                color = MaterialTheme.colors.primary,
+                fontSize = 24.sp,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .clickable {
+                        showBottomSheet()
+                    }
+                    .padding(24.dp),
+            )
+        }
     }
 }
 
@@ -130,7 +134,9 @@ fun ChapterNumber(num: Int) {
 
     Text(
         text = "Chapter $num",
-        modifier = Modifier.fillMaxWidth().padding(top = topPadding),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = topPadding),
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.h1
     )
@@ -140,7 +146,9 @@ fun ChapterNumber(num: Int) {
 fun ChapterTitle(title: String) {
     Text(
         text = title,
-        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.h2
     )
@@ -154,9 +162,10 @@ fun Section(
     Text(
         text = formatSectionText(section, sectionNum),
         style = MaterialTheme.typography.body1,
-        modifier = Modifier.padding(
-            horizontal = 16.dp,
-            vertical = 16.dp
-        )
+        modifier = Modifier
+            .padding(
+                horizontal = 16.dp,
+                vertical = 16.dp
+            )
     )
 }
