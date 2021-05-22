@@ -4,19 +4,19 @@ import com.mattrobertson.wcf.model.Chapter
 import com.mattrobertson.wcf.model.Section
 import com.mattrobertson.wcf.model.Confession
 
-fun mapJsonToConfession(json: com.mattrobertson.wcf.data.json.model.Confession): Confession {
+fun mapJsonToConfession(json: com.mattrobertson.wcf.data.json.model.ConfessionJson): Confession {
     return Confession(
-        json.chapters.map {mapJsonToChapter(it) }
+        json.chapterJsons.map {mapJsonToChapter(it) }
     )
 }
 
-fun mapJsonToChapter(json: com.mattrobertson.wcf.data.json.model.Chapter): Chapter {
+fun mapJsonToChapter(json: com.mattrobertson.wcf.data.json.model.ChapterJson): Chapter {
     return Chapter(
         title = json.title,
-        sections = json.sections.map { mapJsonToSection(it) }
+        sections = json.sectionJsons.map { mapJsonToSection(it) }
     )
 }
 
-fun mapJsonToSection(json: com.mattrobertson.wcf.data.json.model.Section): Section {
+fun mapJsonToSection(json: com.mattrobertson.wcf.data.json.model.SectionJson): Section {
     return Section(json.text)
 }
