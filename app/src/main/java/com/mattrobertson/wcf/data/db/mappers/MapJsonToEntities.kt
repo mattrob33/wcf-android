@@ -9,12 +9,15 @@ import com.mattrobertson.wcf.data.json.model.SectionJson
 
 fun mapConfession(json: ConfessionJson): ConfessionEntity {
     return ConfessionEntity(
-        chapters = json.chapterJsons.map { mapChapter(it) }
+        chapters = json.chapterJsons.mapIndexed { index, chapter ->
+            mapChapter(chapter, index + 1)
+        }
     )
 }
 
-fun mapChapter(json: ChapterJson): ChapterEntity {
+fun mapChapter(json: ChapterJson, chapterNum: Int): ChapterEntity {
     return ChapterEntity(
+        chapterNum = chapterNum,
         title = json.title,
         sections = json.sectionJsons.map { mapSection(it) }
     )

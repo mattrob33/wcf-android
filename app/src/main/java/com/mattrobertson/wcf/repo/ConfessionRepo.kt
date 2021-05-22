@@ -1,21 +1,28 @@
 package com.mattrobertson.wcf.repo
 
-import com.mattrobertson.wcf.data.json.ConfessionParser
+import com.mattrobertson.wcf.data.db.dao.ChapterDao
+import com.mattrobertson.wcf.data.db.dao.ConfessionDao
+import com.mattrobertson.wcf.data.db.mappers.mapChapter
+import com.mattrobertson.wcf.data.db.mappers.mapConfession
 import com.mattrobertson.wcf.model.Chapter
 import com.mattrobertson.wcf.model.Confession
-import java.lang.IllegalArgumentException
 
-class ConfessionRepo {
+class ConfessionRepo(
+    private val confessionDao: ConfessionDao,
+    private val chapterDao: ChapterDao
+) {
 
-    val confession = ConfessionParser().confession
+    suspend fun getChapter(index: Int): Chapter {
+        if (index < 1) throw IllegalArgumentException("Chapter index cannot be less than 1")
+        if (index > Confession.NUM_CHAPTERS) throw IllegalArgumentException("Chapter index cannot be greater than ${Confession.NUM_CHAPTERS}")
 
-    fun getChapter(index: Int): Chapter {
-        if (index < 0) throw IllegalArgumentException("Chapter index cannot be negative")
-        if (index >= Confession.NUM_CHAPTERS) throw IllegalArgumentException("Chapter index cannot be greater than ${Confession.NUM_CHAPTERS - 1}")
-
-        return confession.chapters[index]
+        return mapChapter(
+            chapterDao.getChapter(index)
+        )
     }
 
-    fun getAllChapters() = confession.chapters
+    suspend fun getConfession() = mapConfession(
+        confessionDao.getConfession()
+    )
 
 }

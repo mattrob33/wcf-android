@@ -10,15 +10,15 @@ import com.mattrobertson.wcf.data.db.model.ChapterEntity
 interface ChapterDao {
 
     @Query("SELECT * FROM chapters")
-    fun getAllChapters(): List<ChapterEntity>
+    suspend fun getAllChapters(): List<ChapterEntity>
 
     @Query("SELECT * FROM chapters WHERE chapterNum=:chapterNum")
-    fun getChapter(chapterNum: Int): ChapterEntity
+    suspend fun getChapter(chapterNum: Int): ChapterEntity
 
     @Insert
-    fun insertAll(vararg chapters: ChapterEntity)
+    suspend fun insertAll(vararg chapters: ChapterEntity)
 
     @Delete
-    fun delete(chapter: ChapterEntity)
+    suspend fun delete(chapter: ChapterEntity)
 
 }

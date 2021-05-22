@@ -11,12 +11,12 @@ import com.mattrobertson.wcf.data.db.model.ConfessionEntity
 interface ConfessionDao {
 
     @Query("SELECT * FROM confession")
-    fun getConfession(): ConfessionEntity
+    suspend fun getConfession(): ConfessionEntity
 
     @Insert
-    fun insert(confession: ConfessionEntity)
+    suspend fun insert(confession: ConfessionEntity)
 
     @Delete
-    fun delete(confession: ConfessionEntity)
+    suspend fun delete(confession: ConfessionEntity)
 
 }
