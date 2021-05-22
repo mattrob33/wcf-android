@@ -13,7 +13,7 @@ class ConfessionParser {
     private val assets = WCFApplication.context.assets
     private val json = assets.open("wcf.json").bufferedReader().use { it.readText() }
 
-    private val jsonConfession = confessionJsonAdapter.fromJson(json)!!
+    val jsonConfession = confessionJsonAdapter.fromJson(json)!!
 
     val confession = mapJsonToConfession(jsonConfession)
 
