@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "chapters")
 data class ChapterEntity(
-    @PrimaryKey val chapterNum: Int,
+    @PrimaryKey val chapterNum: Int = 0,
     val title: String,
     val sections: List<SectionEntity>
 )
