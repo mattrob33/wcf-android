@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.mattrobertson.wcf.data.db.ConfessionDatabase
-import com.mattrobertson.wcf.data.db.mappers.mapConfession
+import com.mattrobertson.wcf.data.db.mappers.mapChapter
 import com.mattrobertson.wcf.data.json.ConfessionParser
 import kotlinx.coroutines.coroutineScope
 
@@ -16,10 +16,12 @@ class PopulateDatabaseWorker(
     override suspend fun doWork(): Result = coroutineScope {
         try {
             val jsonConfession = ConfessionParser().jsonConfession
-            val confessionEntity = mapConfession(jsonConfession)
+            val chapters = jsonConfession.chapterJsons.mapIndexed { index, chapter ->
+                mapChapter(chapter, index + 1)
+            }
 
             val database = ConfessionDatabase.getInstance(applicationContext)
-            database.confessionDao().insert(confessionEntity)
+            database.chapterDao().insertAll(chapters)
 
             Result.success()
 

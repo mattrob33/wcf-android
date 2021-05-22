@@ -16,7 +16,7 @@ interface ChapterDao {
     suspend fun getChapter(chapterNum: Int): ChapterEntity
 
     @Insert
-    suspend fun insertAll(vararg chapters: ChapterEntity)
+    suspend fun insertAll(chapters: List<ChapterEntity>)
 
     @Delete
     suspend fun delete(chapter: ChapterEntity)

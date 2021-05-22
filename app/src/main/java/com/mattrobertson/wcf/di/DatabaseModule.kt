@@ -3,7 +3,6 @@ package com.mattrobertson.wcf.di
 import android.content.Context
 import com.mattrobertson.wcf.data.db.ConfessionDatabase
 import com.mattrobertson.wcf.data.db.dao.ChapterDao
-import com.mattrobertson.wcf.data.db.dao.ConfessionDao
 import com.mattrobertson.wcf.repo.ConfessionRepo
 import dagger.Module
 import dagger.Provides
@@ -23,18 +22,10 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideConfessionDao(db: ConfessionDatabase): ConfessionDao {
-        return db.confessionDao()
-    }
-
-    @Provides
     fun provideChapterDao(db: ConfessionDatabase): ChapterDao {
         return db.chapterDao()
     }
 
     @Provides
-    fun provideConfessionRepo(
-        confessionDao: ConfessionDao,
-        chapterDao: ChapterDao
-    ) = ConfessionRepo(confessionDao, chapterDao)
+    fun provideConfessionRepo(chapterDao: ChapterDao) = ConfessionRepo(chapterDao)
 }

@@ -1,14 +1,12 @@
 package com.mattrobertson.wcf.repo
 
 import com.mattrobertson.wcf.data.db.dao.ChapterDao
-import com.mattrobertson.wcf.data.db.dao.ConfessionDao
 import com.mattrobertson.wcf.data.db.mappers.mapChapter
 import com.mattrobertson.wcf.data.db.mappers.mapConfession
 import com.mattrobertson.wcf.model.Chapter
 import com.mattrobertson.wcf.model.Confession
 
 class ConfessionRepo(
-    private val confessionDao: ConfessionDao,
     private val chapterDao: ChapterDao
 ) {
 
@@ -20,9 +18,5 @@ class ConfessionRepo(
             chapterDao.getChapter(index)
         )
     }
-
-    suspend fun getConfession() = mapConfession(
-        confessionDao.getConfession()
-    )
 
 }
