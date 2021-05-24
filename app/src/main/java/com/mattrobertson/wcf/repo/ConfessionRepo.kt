@@ -7,7 +7,7 @@ import java.lang.IllegalArgumentException
 
 class ConfessionRepo {
 
-    private val confession = ConfessionParser().confession
+    val confession = ConfessionParser().confession
 
     fun getChapter(index: Int): Chapter {
         if (index < 0) throw IllegalArgumentException("Chapter index cannot be negative")
@@ -17,7 +17,5 @@ class ConfessionRepo {
     }
 
     fun getAllChapters() = confession.chapters
-
-    fun getConfession() = confession
 
 }

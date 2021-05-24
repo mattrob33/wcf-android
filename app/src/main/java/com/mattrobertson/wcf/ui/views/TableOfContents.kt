@@ -24,7 +24,7 @@ import com.mattrobertson.wcf.ui.theme.VeryDarkGray
 
 @Composable
 fun TableOfContents(
-    confession: Confession,
+    titles: List<String>,
     onClick: (position: Int) -> Unit
 ) {
     Surface(
@@ -36,10 +36,10 @@ fun TableOfContents(
             LazyColumn(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-                confession.chapters.forEachIndexed { index, chapter ->
+                titles.forEachIndexed { index, title ->
                     item {
                         TocItem(
-                            text = "${index + 1}. ${chapter.title}",
+                            text = "${index + 1}. $title",
                             onClick = { onClick(index) }
                         )
                         Divider()

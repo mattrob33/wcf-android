@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mattrobertson.wcf.R
+import com.mattrobertson.wcf.ReadingViewModel
 import com.mattrobertson.wcf.model.Chapter
 import com.mattrobertson.wcf.model.Confession
 import com.mattrobertson.wcf.model.Section
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterialApi
 @Composable
 fun ConfessionScreen(
-    confession: Confession
+    viewModel: ReadingViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -48,7 +49,7 @@ fun ConfessionScreen(
                     .height(400.dp)
             ) {
                 TableOfContents(
-                    confession = confession,
+                    titles = viewModel.chapterTitles,
                     onClick = { position ->
                         coroutineScope.launch {
                             bottomSheetScaffoldState.bottomSheetState.collapse()
@@ -61,7 +62,7 @@ fun ConfessionScreen(
         sheetPeekHeight = 0.dp
     ) {
         Confession(
-            confession = confession,
+            confession = viewModel.repo.confession,
             listState = listState,
             showBottomSheet = {
                 coroutineScope.launch {
@@ -88,9 +89,7 @@ fun Confession(
                 confession.chapters.forEachIndexed { index, chapter ->
                     item {
                         Chapter(chapter, index + 1)
-                        Spacer(modifier = Modifier.height(32.dp))
                         Divider()
-                        Spacer(modifier = Modifier.height(32.dp))
                     }
                 }
             }
@@ -136,6 +135,7 @@ fun Chapter(
     chapterNum: Int
 ) {
     Column {
+        Spacer(modifier = Modifier.height(32.dp))
         ChapterNumber(chapterNum)
         ChapterTitle(chapter.title)
         Spacer(modifier = Modifier.height(8.dp))
@@ -146,21 +146,16 @@ fun Chapter(
                 sectionNum = index + 1
             )
         }
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 
 @Composable
 fun ChapterNumber(num: Int) {
-    val topPadding = when (num) {
-        1 -> 28.dp
-        else -> 0.dp
-    }
-
     Text(
         text = "Chapter $num",
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = topPadding),
+            .fillMaxWidth(),
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.h1
     )
