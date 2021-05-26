@@ -62,7 +62,7 @@ fun ConfessionScreen(
         sheetPeekHeight = 0.dp
     ) {
         Confession(
-            confession = viewModel.repo.confession,
+            confession = viewModel.confession,
             listState = listState,
             showBottomSheet = {
                 coroutineScope.launch {

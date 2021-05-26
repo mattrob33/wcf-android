@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.mattrobertson.wcf.data.db.dao.ChapterDao
+import com.mattrobertson.wcf.data.db.dao.ConfessionDao
 import com.mattrobertson.wcf.data.db.model.ChapterEntity
 import com.mattrobertson.wcf.data.db.model.SectionEntity
 import com.mattrobertson.wcf.data.db.worker.PopulateDatabaseWorker
@@ -21,7 +21,7 @@ import com.mattrobertson.wcf.data.db.worker.PopulateDatabaseWorker
 )
 abstract class ConfessionDatabase: RoomDatabase() {
 
-    abstract fun chapterDao(): ChapterDao
+    abstract fun confessionDao(): ConfessionDao
 
     companion object {
 

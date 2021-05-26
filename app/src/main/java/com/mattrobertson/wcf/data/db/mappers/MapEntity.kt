@@ -1,14 +1,13 @@
 package com.mattrobertson.wcf.data.db.mappers
 
-import com.mattrobertson.wcf.data.db.model.ChapterEntity
+import com.mattrobertson.wcf.data.db.model.ChapterAndSections
 import com.mattrobertson.wcf.data.db.model.SectionEntity
 import com.mattrobertson.wcf.model.Chapter
-import com.mattrobertson.wcf.model.Confession
 import com.mattrobertson.wcf.model.Section
 
-fun mapChapter(entity: ChapterEntity): Chapter {
+fun mapChapter(entity: ChapterAndSections): Chapter {
     return Chapter(
-        title = entity.title,
+        title = entity.chapter.title,
         sections = entity.sections.map { mapSection(it) }
     )
 }

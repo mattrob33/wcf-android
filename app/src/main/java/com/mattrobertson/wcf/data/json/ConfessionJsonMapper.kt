@@ -6,14 +6,14 @@ import com.mattrobertson.wcf.model.Confession
 
 fun mapJsonToConfession(json: com.mattrobertson.wcf.data.json.model.ConfessionJson): Confession {
     return Confession(
-        json.chapterJsons.map {mapJsonToChapter(it) }
+        json.chapters.map {mapJsonToChapter(it) }
     )
 }
 
 fun mapJsonToChapter(json: com.mattrobertson.wcf.data.json.model.ChapterJson): Chapter {
     return Chapter(
         title = json.title,
-        sections = json.sectionJsons.map { mapJsonToSection(it) }
+        sections = json.sections.map { mapJsonToSection(it) }
     )
 }
 
